@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria Louisa Alfianto — Junior Cloud Engineer</title>
+  <meta name="description" content="Portfolio of a Computer Science student at BINUS University Bandung, specializing in Cloud Computing, GCP VPC design, IPv4 subnetting, and relational database infrastructure." />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind config: enable class-based dark mode -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50:  '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Subtle gradient backdrop for hero */
+    .hero-grid {
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(59,130,246,0.12), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(37,99,235,0.10), transparent 35%);
+    }
+    .dark .hero-grid {
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(59,130,246,0.18), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(37,99,235,0.14), transparent 35%);
+    }
+    /* Hide scrollbar for the mobile nav if needed */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">
+
+  <!-- ============================= NAVBAR ============================= -->
+  <header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/80">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+      <!-- Logo -->
+      <a href="#home" class="flex items-center gap-2 font-bold tracking-tight">
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-white">
+          <i data-lucide="cloud" class="h-5 w-5"></i>
+        </span>
+        <span class="text-lg">M<span class="text-brand-600">LA</span></span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <div class="hidden items-center gap-6 md:flex">
+        <a href="#about" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">About</a>
+        <a href="#skills" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">Skills</a>
+        <a href="#credentials" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">Credentials</a>
+        <a href="#showcase" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">Architecture Showcase</a>
+        <a href="#projects" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">Projects</a>
+        <a href="#contact" class="text-sm font-medium text-slate-600 transition hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-500">Contact</a>
+      </div>
+
+      <!-- Right controls -->
+      <div class="flex items-center gap-2">
+        <!-- Dark / Light mode toggle -->
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode"
+          class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+          <i data-lucide="moon" class="h-5 w-5 dark:hidden"></i>
+          <i data-lucide="sun" class="hidden h-5 w-5 dark:block"></i>
+        </button>
+
+        <!-- Mobile menu toggle -->
+        <button id="mobile-toggle" type="button" aria-label="Open menu"
+          class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100 md:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" class="hidden border-t border-slate-200 px-5 pb-4 md:hidden dark:border-slate-800">
+      <div class="flex flex-col gap-1 pt-2">
+        <a href="#about" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">About</a>
+        <a href="#skills" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Skills</a>
+        <a href="#credentials" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Credentials</a>
+        <a href="#showcase" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Architecture Showcase</a>
+        <a href="#projects" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Projects</a>
+        <a href="#contact" class="rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- ============================= HERO ============================= -->
+    <section class="hero-grid">
+      <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 dark:border-brand-500/30 dark:bg-brand-500/10 dark:text-brand-500">
+            <i data-lucide="map-pin" class="h-3.5 w-3.5"></i>
+            Bandung, Indonesia · Open to Internships
+          </span>
+
+          <!-- EDIT NAME -->
+          <h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+            Maria Louisa Alfianto
+          </h1>
+
+          <p class="mt-4 text-lg font-semibold text-brand-700 dark:text-brand-500 sm:text-xl">
+            Computer Science Student (Class of 2028) | Junior Cloud Engineer &amp; Cloud Infrastructure Associate
+          </p>
+
+          <p class="mt-4 max-w-2xl text-base text-slate-600 dark:text-slate-400">
+            Specializing in Cloud Computing, GCP Virtual Private Cloud (VPC) topology design, IPv4 Subnetting/CIDR, and Relational Database Infrastructure.
+          </p>
+
+          <!-- Action buttons -->
+          <div class="mt-8 flex flex-wrap gap-3">
+            <!-- View CV: relative path, new tab -->
+            <a href="./cv/MariaLouisaAlfianto_CV.pdf" target="_blank" rel="noopener" data-pdf-link data-label="CV"
+              class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700">
+              <i data-lucide="file-text" class="h-4 w-4"></i>
+              View CV (PDF)
+            </a>
+
+            <!-- View Certifications: smooth scroll to credentials -->
+            <a href="#credentials"
+              class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
+              <i data-lucide="award" class="h-4 w-4"></i>
+              View Certifications
+            </a>
+
+            <!-- GitHub profile: new tab. EDIT GITHUB URL HERE -->
+            <!-- Inline SVG used because Lucide's CDN no longer ships a reliable "github" brand icon -->
+            <a href="https://github.com/Maria6787" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.57.1.78-.25.78-.55v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/>
+              </svg>
+              GitHub Profile
+            </a>
+          </div>
+
+          <!-- Quick stat chips -->
+          <div class="mt-10 flex flex-wrap gap-6 text-sm">
+            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+              <i data-lucide="graduation-cap" class="h-4 w-4 text-brand-600"></i>
+              BINUS University — Bandung
+            </div>
+            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+              <i data-lucide="layers" class="h-4 w-4 text-brand-600"></i>
+              6th Semester CS
+            </div>
+            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+              <i data-lucide="cloud" class="h-4 w-4 text-brand-600"></i>
+              Cloud Computing Specialization
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= ABOUT & EDUCATION ============================= -->
+    <section id="about" class="border-t border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-12 max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight">About &amp; Education</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            A quick look at my background, focus areas, and academic journey toward a career in cloud infrastructure.
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Card 1: Professional Profile & Experience -->
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-7 dark:border-slate-800 dark:bg-slate-950">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                <i data-lucide="user-round" class="h-5 w-5"></i>
+              </span>
+              <h3 class="text-xl font-semibold">Professional Profile &amp; Experience</h3>
+            </div>
+
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              Computer Science student at <strong class="font-semibold text-slate-800 dark:text-slate-200">Bina Nusantara University (BINUS University) — Bandung</strong>, building a strong foundation in cloud infrastructure.
+            </p>
+
+            <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <span class="font-semibold text-slate-800 dark:text-slate-200">Focus areas:</span>
+              VPC architecture, public/private subnets, cloud security &amp; firewalls, database administration, and Linux system administration.
+            </p>
+
+            <div class="mt-6 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                  KMK BINUS University — Staff of Logistics &amp; Equipment (Perkap)
+                </h4>
+                <span class="whitespace-nowrap rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">2025–2026</span>
+              </div>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Authored equipment specifications in event proposals and aligned technical hardware logistics with event schedules.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2: Education & Coursework -->
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-7 dark:border-slate-800 dark:bg-slate-950">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                <i data-lucide="graduation-cap" class="h-5 w-5"></i>
+              </span>
+              <h3 class="text-xl font-semibold">Education &amp; Coursework</h3>
+            </div>
+
+            <dl class="space-y-3 text-sm">
+              <div>
+                <dt class="font-semibold text-slate-800 dark:text-slate-200">University</dt>
+                <dd class="text-slate-600 dark:text-slate-400">Bina Nusantara University (BINUS University) — Bandung, Indonesia</dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-slate-800 dark:text-slate-200">Degree</dt>
+                <dd class="text-slate-600 dark:text-slate-400">Sarjana Komputer (S.Kom.) in Computer Science · Expected Graduation: 2028</dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-slate-800 dark:text-slate-200">Specialization</dt>
+                <dd class="text-slate-600 dark:text-slate-400">Cloud Computing</dd>
+              </div>
+            </dl>
+
+            <div class="mt-6">
+              <p class="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-200">Relevant Coursework</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Computer Networks</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Database Technology</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Cloud Computing &amp; Services</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Cloud Security</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Operating Systems</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">DevOps in Cloud Environments</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">Software Engineering</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= TECHNICAL SKILLS ============================= -->
+    <section id="skills" class="border-t border-slate-200 py-20 dark:border-slate-800">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-12 max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight">Technical Skills</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            Cloud and infrastructure skills grouped by domain — the toolkit I bring to a Cloud Engineering role.
+          </p>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Category 1 -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+              <i data-lucide="cloud-cog" class="h-5 w-5"></i>
+            </span>
+            <h3 class="mb-3 text-base font-semibold">Cloud Platforms &amp; Infrastructure</h3>
+            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>GCP</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>VPC Architecture</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>IAM</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Compute Engine</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Cloud Fundamentals</li>
+            </ul>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+              <i data-lucide="shield-check" class="h-5 w-5"></i>
+            </span>
+            <h3 class="mb-3 text-base font-semibold">Networking &amp; Security</h3>
+            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>IPv4 Subnetting &amp; CIDR</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Cloud Security</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Firewalls / Security Groups</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Routing Concepts</li>
+            </ul>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+              <i data-lucide="database" class="h-5 w-5"></i>
+            </span>
+            <h3 class="mb-3 text-base font-semibold">Databases &amp; Storage</h3>
+            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Relational Databases (MySQL / PostgreSQL)</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>SQL Schema Design</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Data Storage Fundamentals</li>
+            </ul>
+          </div>
+
+          <!-- Category 4 -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+              <i data-lucide="terminal" class="h-5 w-5"></i>
+            </span>
+            <h3 class="mb-3 text-base font-semibold">Environment &amp; Tools</h3>
+            <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Basic Linux CLI Navigation</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>Git Version Control</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-brand-600"></i>System Administration Basics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= CREDENTIALS & CERTIFICATIONS ============================= -->
+    <section id="credentials" class="border-t border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-12 max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight">Credentials &amp; Certifications</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            Verified certifications demonstrating cloud fundamentals and hands-on technical practice.
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Certification 1 -->
+          <div class="group rounded-2xl border border-slate-200 bg-slate-50 p-7 transition hover:border-brand-500/50 hover:shadow-md dark:border-slate-800 dark:bg-slate-950">
+            <div class="flex items-start justify-between gap-4">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600">
+                <i data-lucide="badge-check" class="h-6 w-6"></i>
+              </span>
+              <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Verified</span>
+            </div>
+            <h3 class="mt-5 text-lg font-semibold">Google Cloud Computing Foundations Certificate</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Issuer: Google Cloud</p>
+            <!-- EDIT VERIFY URL HERE (Google Cloud Skills Boost) -->
+            <a href="https://www.credly.com/badges/bf873acf-1f7f-4659-90b8-b227bdc09c40/public_url" target="_blank" rel="noopener"
+              class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700 dark:hover:text-brand-500">
+              Verify Certificate
+              <i data-lucide="external-link" class="h-4 w-4"></i>
+            </a>
+          </div>
+
+          <!-- Certification 2 -->
+          <div class="group rounded-2xl border border-slate-200 bg-slate-50 p-7 transition hover:border-brand-500/50 hover:shadow-md dark:border-slate-800 dark:bg-slate-950">
+            <div class="flex items-start justify-between gap-4">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600">
+                <i data-lucide="dumbbell" class="h-6 w-6"></i>
+              </span>
+              <span class="rounded-full bg-brand-600/10 px-3 py-1 text-xs font-semibold text-brand-700 dark:text-brand-500">PDF</span>
+            </div>
+            <h3 class="mt-5 text-lg font-semibold">Dev Gym Certification (Databases for Developers: Foundations)</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Issuer: Dev Gym</p>
+            <!-- Relative PDF path, new tab -->
+            <a href="./certificates/dev-gym-cert.pdf" target="_blank" rel="noopener" data-pdf-link data-label="Dev Gym certificate"
+              class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700 dark:hover:text-brand-500">
+              View PDF Certificate
+              <i data-lucide="file-text" class="h-4 w-4"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= TECHNICAL SHOWCASE (TABS) ============================= -->
+    <section id="showcase" class="border-t border-slate-200 py-20 dark:border-slate-800">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-12 max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight">Technical Showcase</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            Interview-ready architecture deep-dive: schema design, network data flow, and operational monitoring.
+          </p>
+        </div>
+
+        <!-- Tab buttons -->
+        <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800">
+          <button data-tab="tab-sql" class="tab-btn -mb-px flex items-center gap-2 border-b-2 border-brand-600 px-4 py-3 text-sm font-semibold text-brand-600">
+            <i data-lucide="database" class="h-4 w-4"></i> SQL Schema DDL
+          </button>
+          <button data-tab="tab-flow" class="tab-btn -mb-px flex items-center gap-2 border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate-500 transition hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
+            <i data-lucide="network" class="h-4 w-4"></i> System Data Flow
+          </button>
+          <button data-tab="tab-status" class="tab-btn -mb-px flex items-center gap-2 border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate-500 transition hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
+            <i data-lucide="activity" class="h-4 w-4"></i> Cloud Infrastructure Status
+          </button>
+        </div>
+
+        <!-- Tab panels -->
+        <div class="mt-6">
+          <!-- Tab 1: SQL Schema DDL -->
+          <div id="tab-sql" class="tab-panel">
+            <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm">
+              <div class="flex items-center justify-between border-b border-slate-800 bg-slate-950 px-4 py-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                  <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                  <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                </div>
+                <span class="font-mono text-xs text-slate-400">schema.sql — PostgreSQL</span>
+              </div>
+<pre class="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-slate-200"><code>-- ============================================
+-- Cloud Network Infrastructure Schema (PostgreSQL)
+-- ============================================
+
+CREATE TABLE vpc_subnets (
+    subnet_id       SERIAL PRIMARY KEY,
+    subnet_name     VARCHAR(64)  NOT NULL UNIQUE,
+    cidr_block      CIDR         NOT NULL,
+    region          VARCHAR(32)  NOT NULL DEFAULT 'asia-southeast2',
+    is_public       BOOLEAN      NOT NULL DEFAULT FALSE,
+    created_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE firewalls (
+    firewall_id     SERIAL PRIMARY KEY,
+    rule_name       VARCHAR(64)  NOT NULL UNIQUE,
+    subnet_id       INTEGER      NOT NULL,
+    direction       VARCHAR(8)   NOT NULL CHECK (direction IN ('INGRESS','EGRESS')),
+    protocol        VARCHAR(8)   NOT NULL CHECK (protocol IN ('tcp','udp','icmp')),
+    port_range      VARCHAR(16),
+    action          VARCHAR(8)   NOT NULL DEFAULT 'ALLOW'
+                                 CHECK (action IN ('ALLOW','DENY')),
+    priority        INTEGER      NOT NULL DEFAULT 1000,
+    -- Foreign key: each firewall rule binds to one subnet
+    CONSTRAINT fk_subnet
+        FOREIGN KEY (subnet_id)
+        REFERENCES vpc_subnets (subnet_id)
+        ON DELETE CASCADE
+);
+
+-- Index to speed up rule lookups per subnet
+CREATE INDEX idx_firewalls_subnet ON firewalls (subnet_id);
+</code></pre>
+            </div>
+          </div>
+
+          <!-- Tab 2: System Data Flow -->
+          <div id="tab-flow" class="tab-panel hidden">
+            <div class="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900">
+              <p class="mb-8 text-sm text-slate-600 dark:text-slate-400">
+                End-to-end request path through a secured GCP VPC — public ingress is filtered before it can reach the isolated private database tier.
+              </p>
+
+              <div class="flex flex-col items-stretch gap-4 lg:flex-row lg:items-center">
+                <!-- Node 1 -->
+                <div class="flex flex-1 flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-5 text-center dark:border-slate-700 dark:bg-slate-950">
+                  <i data-lucide="globe" class="h-7 w-7 text-brand-600"></i>
+                  <p class="mt-2 text-sm font-semibold">Client / Internet</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Public request</p>
+                </div>
+
+                <i data-lucide="arrow-right" class="mx-auto hidden h-6 w-6 shrink-0 text-slate-400 lg:block"></i>
+                <i data-lucide="arrow-down" class="mx-auto h-6 w-6 shrink-0 text-slate-400 lg:hidden"></i>
+
+                <!-- Node 2 -->
+                <div class="flex flex-1 flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-5 text-center dark:border-slate-700 dark:bg-slate-950">
+                  <i data-lucide="router" class="h-7 w-7 text-brand-600"></i>
+                  <p class="mt-2 text-sm font-semibold">GCP Cloud NAT / Public Subnet</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Edge entry tier</p>
+                </div>
+
+                <i data-lucide="arrow-right" class="mx-auto hidden h-6 w-6 shrink-0 text-slate-400 lg:block"></i>
+                <i data-lucide="arrow-down" class="mx-auto h-6 w-6 shrink-0 text-slate-400 lg:hidden"></i>
+
+                <!-- Node 3 -->
+                <div class="flex flex-1 flex-col items-center rounded-xl border border-amber-300 bg-amber-50 p-5 text-center dark:border-amber-500/40 dark:bg-amber-500/10">
+                  <i data-lucide="shield" class="h-7 w-7 text-amber-600 dark:text-amber-400"></i>
+                  <p class="mt-2 text-sm font-semibold">Firewall Rule Filter</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Ingress policy check</p>
+                </div>
+
+                <i data-lucide="arrow-right" class="mx-auto hidden h-6 w-6 shrink-0 text-slate-400 lg:block"></i>
+                <i data-lucide="arrow-down" class="mx-auto h-6 w-6 shrink-0 text-slate-400 lg:hidden"></i>
+
+                <!-- Node 4 -->
+                <div class="flex flex-1 flex-col items-center rounded-xl border border-emerald-300 bg-emerald-50 p-5 text-center dark:border-emerald-500/40 dark:bg-emerald-500/10">
+                  <i data-lucide="database-zap" class="h-7 w-7 text-emerald-600 dark:text-emerald-400"></i>
+                  <p class="mt-2 text-sm font-semibold">Isolated Private Subnet DB</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">No public IP</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Cloud Infrastructure Status -->
+          <div id="tab-status" class="tab-panel hidden">
+            <div class="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900">
+              <div class="mb-6 flex items-center gap-3">
+                <span class="relative flex h-3 w-3">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex h-3 w-3 rounded-full bg-emerald-500"></span>
+                </span>
+                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">All systems operational</p>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-950">
+                  <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                    <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-500"></i>
+                    <span class="text-xs font-medium uppercase tracking-wide">Status</span>
+                  </div>
+                  <p class="mt-2 font-mono text-xl font-semibold text-emerald-600 dark:text-emerald-400">200 OK</p>
+                </div>
+
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-950">
+                  <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                    <i data-lucide="gauge" class="h-4 w-4 text-brand-600"></i>
+                    <span class="text-xs font-medium uppercase tracking-wide">Avg Latency</span>
+                  </div>
+                  <p class="mt-2 font-mono text-xl font-semibold text-slate-800 dark:text-slate-100">12ms</p>
+                </div>
+
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-950">
+                  <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                    <i data-lucide="globe-2" class="h-4 w-4 text-brand-600"></i>
+                    <span class="text-xs font-medium uppercase tracking-wide">Region</span>
+                  </div>
+                  <p class="mt-2 font-mono text-xl font-semibold text-slate-800 dark:text-slate-100">asia-southeast2</p>
+                </div>
+
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-950">
+                  <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                    <i data-lucide="lock" class="h-4 w-4 text-brand-600"></i>
+                    <span class="text-xs font-medium uppercase tracking-wide">Security</span>
+                  </div>
+                  <p class="mt-2 text-sm font-semibold text-slate-800 dark:text-slate-100">Isolated Private Subnets</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= PROJECTS ============================= -->
+    <section id="projects" class="border-t border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-12 max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight">Projects</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            A live full-stack web app, plus cloud infrastructure builds currently in progress.
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <!-- EDIT PROJECT 1 HERE  (LIVE PROJECT — E-Commerce) -->
+          <article class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:border-brand-500/50 hover:shadow-md dark:border-slate-800 dark:bg-slate-950">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+              </span>
+              <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Live</span>
+            </div>
+            <h3 class="text-lg font-semibold">E-Commerce Web App</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A full-featured online store built with Next.js 15 (App Router), TypeScript, and Tailwind CSS. Includes a product catalog with search, filtering, and sorting; a persistent shopping cart; a wallet-based checkout flow; and user authentication with purchase history. Product data is fetched from a REST API (DummyJSON), state is managed via React Context, and the app is deployed on Vercel.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">Next.js 15</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">TypeScript</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">Tailwind CSS</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">REST API</span>
+            </div>
+            <!-- Live demo link. EDIT URL HERE -->
+            <a href="https://finalproject-646vkk893-maria-s-projects-44c4e10e.vercel.app" target="_blank" rel="noopener"
+              class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700 dark:hover:text-brand-500">
+              View Live Demo
+              <i data-lucide="external-link" class="h-4 w-4"></i>
+            </a>
+          </article>
+
+          <!-- EDIT PROJECT 2 HERE  (LIVE PROJECT — To-Do List) -->
+          <article class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-6 transition hover:border-brand-500/50 hover:shadow-md dark:border-slate-800 dark:bg-slate-950">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                <i data-lucide="list-checks" class="h-5 w-5"></i>
+              </span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-semibold text-brand-700 dark:text-brand-500">Source</span>
+            </div>
+            <h3 class="text-lg font-semibold">Pink Pastel To-Do List Application</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A lightweight, responsive single-page task management app built with HTML5, Bootstrap 5, and vanilla JavaScript. Full CRUD task management with client-side form validation, real-time search filtering, a live clock, and localStorage persistence that keeps tasks across page refreshes — all wrapped in a custom pastel pink theme.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">HTML5</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">Bootstrap 5</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">Vanilla JS</span>
+              <span class="rounded-full bg-brand-600/10 px-2.5 py-1 text-xs font-medium text-brand-700 dark:text-brand-500">localStorage</span>
+            </div>
+            <!-- Source code link. EDIT URL HERE (paste the To-Do List GitHub repo link) -->
+            <a href="https://github.com/your-username/pink-pastel-todo" target="_blank" rel="noopener"
+              class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700 dark:hover:text-brand-500">
+              View Code on GitHub
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.57.1.78-.25.78-.55v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/>
+              </svg>
+            </a>
+          </article>
+
+          <!-- EDIT PROJECT 3 HERE  (COMING SOON) -->
+          <article class="flex flex-col rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 p-6 dark:border-slate-700 dark:bg-slate-950/60">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                <i data-lucide="network" class="h-5 w-5"></i>
+              </span>
+              <span class="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">In Progress</span>
+            </div>
+            <h3 class="text-lg font-semibold">GCP Multi-Tier VPC &amp; Subnet Architecture</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A planned hands-on build: a Virtual Private Cloud (VPC) network topology on Google Cloud Platform with custom CIDR blocks, separating public access tiers from private database instances using strict firewall rules.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">GCP</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">VPC</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">CIDR</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">Firewalls</span>
+            </div>
+            <!-- EDIT URL HERE when the project is ready, then change the label to "View Project" -->
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-400 dark:text-slate-500">
+              Coming soon — to be continued
+              <i data-lucide="clock" class="h-4 w-4"></i>
+            </span>
+          </article>
+
+          <!-- EDIT PROJECT 4 HERE  (COMING SOON) -->
+          <article class="flex flex-col rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 p-6 dark:border-slate-700 dark:bg-slate-950/60">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                <i data-lucide="database" class="h-5 w-5"></i>
+              </span>
+              <span class="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">In Progress</span>
+            </div>
+            <h3 class="text-lg font-semibold">Relational Database Infrastructure &amp; SQL Schema</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A planned build: normalized relational SQL database schemas (PostgreSQL/MySQL) with strict foreign key constraints, indexes, and automated subnet deployment scripts.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">PostgreSQL</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">MySQL</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">SQL DDL</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">Database Security</span>
+            </div>
+            <!-- EDIT URL HERE when the project is ready, then change the label to "View Project" -->
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-400 dark:text-slate-500">
+              Coming soon — to be continued
+              <i data-lucide="clock" class="h-4 w-4"></i>
+            </span>
+          </article>
+
+          <!-- EDIT PROJECT 5 HERE  (COMING SOON) -->
+          <article class="flex flex-col rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 p-6 dark:border-slate-700 dark:bg-slate-950/60">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                <i data-lucide="server" class="h-5 w-5"></i>
+              </span>
+              <span class="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">In Progress</span>
+            </div>
+            <h3 class="text-lg font-semibold">Linux Web &amp; Systems Administration</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A planned build: Linux/Unix server environments configured with shell/bash scripts, reverse proxies, port routing, and secure SSH key-based access control.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">Linux Admin</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">Bash</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">Networking</span>
+              <span class="rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">System Admin</span>
+            </div>
+            <!-- EDIT URL HERE when the project is ready, then change the label to "View Project" -->
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-400 dark:text-slate-500">
+              Coming soon — to be continued
+              <i data-lucide="clock" class="h-4 w-4"></i>
+            </span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= CONTACT ============================= -->
+    <section id="contact" class="border-t border-slate-200 py-20 dark:border-slate-800">
+      <div class="mx-auto max-w-2xl px-5">
+        <div class="mb-10 text-center">
+          <h2 class="text-3xl font-bold tracking-tight">Get in Touch</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">
+            Have an internship opportunity or want to connect? Send a message below.
+          </p>
+        </div>
+
+        <form id="contact-form" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div>
+            <label for="name" class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Name</label>
+            <input id="name" name="name" type="text" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+              placeholder="Your name" />
+          </div>
+          <div>
+            <label for="email" class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+            <input id="email" name="email" type="email" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+              placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="message" class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Message</label>
+            <textarea id="message" name="message" rows="4" required
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+              placeholder="Tell me about the opportunity..."></textarea>
+          </div>
+          <button type="submit"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700">
+            <i data-lucide="send" class="h-4 w-4"></i>
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================= FOOTER ============================= -->
+  <footer class="border-t border-slate-200 bg-white py-8 dark:border-slate-800 dark:bg-slate-950">
+    <div class="mx-auto max-w-6xl px-5 text-center text-sm text-slate-500 dark:text-slate-400">
+      © 2026 | Built with HTML &amp; Tailwind CSS | Vercel Static Ready
+    </div>
+  </footer>
+
+  <!-- ============================= VANILLA JS ============================= -->
+  <script>
+    // ---------- Dark / Light mode ----------
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Initialize from saved preference or OS setting
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        htmlEl.classList.add('dark');
+      } else {
+        htmlEl.classList.remove('dark');
+      }
+    })();
+
+    themeToggle.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ---------- Mobile menu ----------
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    // Close mobile menu after clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link =>
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'))
+    );
+
+    // ---------- Showcase tabs ----------
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const activeClasses = ['border-brand-600', 'text-brand-600'];
+    const inactiveClasses = ['border-transparent', 'text-slate-500', 'dark:text-slate-400'];
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset all buttons to inactive
+        tabButtons.forEach(b => {
+          b.classList.remove(...activeClasses);
+          b.classList.add(...inactiveClasses);
+        });
+        // Activate clicked button
+        btn.classList.add(...activeClasses);
+        btn.classList.remove(...inactiveClasses);
+
+        // Show matching panel
+        const target = btn.getAttribute('data-tab');
+        tabPanels.forEach(panel => {
+          panel.classList.toggle('hidden', panel.id !== target);
+        });
+      });
+    });
+
+    // ---------- Contact form ----------
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim() || 'there';
+      alert('Thanks, ' + name + '! Your message has been received. I will get back to you soon.');
+      e.target.reset();
+    });
+
+    // ---------- Graceful PDF links ----------
+    // The CV and certificate links point to real files you add later
+    // (./cv/... and ./certificates/...). Until those PDFs exist, this
+    // check avoids an ugly 404 and tells you exactly what to do.
+    document.querySelectorAll('[data-pdf-link]').forEach(link => {
+      link.addEventListener('click', async (e) => {
+        const url = link.getAttribute('href');
+        const label = link.getAttribute('data-label') || 'file';
+        try {
+          const res = await fetch(url, { method: 'HEAD' });
+          const type = res.headers.get('content-type') || '';
+          // If missing, or the server returned an HTML error page instead of a PDF
+          if (!res.ok || type.includes('text/html')) {
+            e.preventDefault();
+            alert('The ' + label + ' PDF isn\'t uploaded yet.\n\nAdd your file at:\n' + url + '\n\nThen this button will open it in a new tab.');
+          }
+        } catch (err) {
+          // fetch can fail on the file:// protocol (opening the HTML directly
+          // from disk). In that case just let the link proceed normally.
+        }
+      });
+    });
+
+    // ---------- Render Lucide icons ----------
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+x
